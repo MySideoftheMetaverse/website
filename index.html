@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Side of the Metaverse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="preload" as="style">
+    <style>
+
+:root {
+    --primary-color: #6A0DAD; /* Dark Purple */
+    --secondary-color: #00BFFF; /* Deep Sky Blue */
+    --accent-color: #FF6F61; /* Coral */
+    --text-color: #FFFFFF; /* White */
+    --background-gradient-start: #0A192F; /* Dark Navy */
+    --background-gradient-middle: #1A0B2A; /* Very Dark Purple */
+    --background-gradient-end: #341759; /* Purple */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Orbitron', sans-serif;
+    overflow-x: hidden;
+}
+
+body {
+    background: linear-gradient(45deg, var(--background-gradient-start), var(--background-gradient-middle), var(--background-gradient-end));
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    position: relative;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(128, 0, 128, 0.1),
+        rgba(255, 0, 0, 0.05) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu a:hover {
+    background-color: var(--text-color);
+    color: var(--primary-color);
+}
+
+.title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+
+   /* Glow effect */
+   text-shadow:
+       0 0 3px currentColor,
+       0 0 6px currentColor,
+       0 0 12px #8A2BE2,
+       0 0 24px #4B0082,
+       0 0 48px var(--primary-color);
+    
+   animation: glowText 2s infinite alternate; 
+}
+
+@keyframes glowText {
+   from { 
+       text-shadow:
+           0 0 5px currentColor,
+           0 0 10px currentColor; 
+   }
+   to { 
+       text-shadow:
+           0 0 15px currentColor,
+           0 0 30px currentColor; 
+   }
+}
+
+.pink-theme {
+    color: #FF69B4; /* Hot Pink */
+    text-shadow:
+        0 0 5px #FF69B4,
+        0 0 10px #FF69B4,
+        0 0 20px #FF1493,
+        0 0 40px #FF1493;
+}
+
+.cyan-theme {
+    color: #00FFFF; /* Cyan */
+    text-shadow:
+        0 0 5px #00FFFF,
+        0 0 10px #00FFFF,
+        0 0 20px #00CED1,
+        0 0 40px #00CED1;
+}
+
+.green-theme {
+    color: #32CD32; /* Lime Green */
+    text-shadow:
+        0 0 5px #32CD32,
+        0 0 10px #32CD32,
+        0 0 20px #006400,
+        0 0 40px #006400;
+}
+
+.orange-theme {
+    color: #FFA500; /* Orange */
+    text-shadow:
+        0 0 5px #FFA500,
+        0 0 10px #FFA500,
+        0 0 20px #FF8C00,
+        0 0 40px #FF8C00;
+}
+
+.welcome-text {
+   display:block; 
+   font-size:1rem; 
+   color:variables(--secondary-color); 
+   text-transform:uppercase; 
+   letter-spacing:.125em; 
+   margin-bottom:.625em; 
+}
+
+.tagline {
+   font-size:.75rem; 
+   color:variables(--text-color); 
+   font-weight:.300; 
+}
+
+/* Responsive Design */
+@media (max-width:600px) {
+   .menu {
+       position: static; 
+       justify-content:center; 
+       margin-top:.625em; 
+   }
+}
+
+
+    </style>
+</head>
+<body>
+    <nav class="menu">
+        <a href="https://msotm.com/" rel="noopener noreferrer">Home</a>
+        <a href="https://msotm.com/blog" rel="noopener noreferrer">Blog</a>
+    </nav>
+
+    <div id="content">
+        <h1 class="title" id="pageTitle">
+            <span class="welcome-text">Welcome to</span>
+            My Side of the Metaverse
+        </h1>
+        <p class="tagline">Where Reality Takes a Coffee Break</p>
+    </div>
+
+    <script>
+        class ThemeManager {
+            constructor() {
+                this.konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a', 'Enter'];
+                this.currentCodeIndex = 0;
+                this.themeIndex = 1; // Start with a non-default theme (pink)
+                this.title = document.getElementById('pageTitle');
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                document.addEventListener('keydown', this.handleKeyPress.bind(this));
+            }
+
+            handleKeyPress(event) {
+                const key = event.key;
+                
+                console.log(`Key pressed: ${key}`); // Debug log
+
+                if (key === this.konamiCode[this.currentCodeIndex]) {
+                    this.currentCodeIndex++;
+                    
+                    if (this.currentCodeIndex === this.konamiCode.length) {
+                        console.log('Konami code entered'); // Debug log
+                        this.toggleTheme();
+                        this.currentCodeIndex = 0; // Reset after full code entry
+                    }
+                } else {
+                    this.currentCodeIndex = 0; // Reset if an incorrect key is pressed
+                }
+            }
+
+            toggleTheme() {
+                console.log('Toggling theme'); // Debug log
+
+                // Remove existing theme classes
+                this.title.classList.remove('pink-theme', 'cyan-theme', 'green-theme', 'orange-theme');
+
+                switch (this.themeIndex) {
+                    case 1:
+                        console.log('Pink theme'); // Debug log
+                        this.title.classList.add('pink-theme');
+                        break;
+                    case 2:
+                        console.log('Cyan theme'); // Debug log
+                        this.title.classList.add('cyan-theme');
+                        break;
+                    case 3:
+                        console.log('Green theme'); // Debug log
+                        this.title.classList.add('green-theme');
+                        break;
+                    case 4:
+                        console.log('Orange theme'); // Debug log
+                        this.title.classList.add('orange-theme');
+                        break;
+                }
+
+                // Switch to the next theme for the next time the code is entered
+                this.themeIndex = (this.themeIndex + 1) % 5; // Update to cycle through 5 themes
+            }
+        }
+
+        // Initialize theme manager on page load
+        new ThemeManager();
+    </script>
+</body>
+</html>
